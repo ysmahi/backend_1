@@ -19,7 +19,7 @@ function mkLigneEntete($tabAsso,$listeChamps=false)
 		echo "\t<tr>\n";
 		foreach ($tabAsso as $cle => $val)	
 		{
-			echo "\t\t<td>$cle</td>\n";
+			echo "\t\t<th>$cle</th>\n";
 		}
 		echo "\t</tr>\n";
 	}
@@ -28,7 +28,7 @@ function mkLigneEntete($tabAsso,$listeChamps=false)
 		echo "\t<tr>\n";
 		foreach ($listeChamps as $nomChamp)	
 		{
-			echo "\t\t<td>$nomChamp</td>\n";
+			echo "\t\t<th>$nomChamp</th>\n";
 		}
 		echo "\t</tr>\n";
 	}

@@ -76,7 +76,14 @@ function isAdmin($idUser)
 function listerConversations($mode="tout")
 {
 	// Liste toutes les conversations ($mode="tout")
+	$SQL = "SELECT * FROM Conversations";
 	// OU uniquement celles actives  ($mode="actives"), ou inactives  ($mode="inactives")
+	if ($mode == "actives")
+		$SQL .= " WHERE active=1";
+	if ($mode == "inactives")
+		$SQL .= " WHERE active=0";
+	
+	return parcoursRS(SQLSelect($SQL));
 }
 
 function archiverConversation($idConversation)
