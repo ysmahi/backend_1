@@ -21,7 +21,16 @@ include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
  */
 function verifUser($login,$password)
 {
-
+	if ($idUser = verifUserBdd($login,$password)) {
+		// Création des var. de session 
+		// NB : le controleur a appelé session_start
+		$_SESSION["pseudo"] = $login; 
+		$_SESSION["idUser"] = $idUser; 
+		$_SESSION["heureConnexion"] = date("H:i:s"); 
+		$_SESSION["isAdmin"] = isAdmin($idUser);
+		$_SESSION["connecte"] =  true;
+		return true;
+	} else return false; 
 }
 
 

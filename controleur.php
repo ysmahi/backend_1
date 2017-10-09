@@ -29,10 +29,12 @@ session_start();
 		// Un paramètre action a été soumis, on fait le boulot...
 		switch($action)
 		{
-			
+			case 'Logout' : 
+				session_destroy();
+				$qs = "?view=login&msg=" . urlencode("Au revoir !");
+			break; 
+
 			// Connexion //////////////////////////////////////////////////
-
-
 			case 'Connexion' :
 				// On verifie la presence des champs login et passe
 				if ($login = valider("login"))
@@ -40,25 +42,36 @@ session_start();
 				{
 					// On verifie l'utilisateur, et on crée des variables de session si tout est OK
 					// Cf. maLibSecurisation
-					verifUser($login,$passe); 	
+					if (!verifUser($login,$passe)) 
+						 $qs = "?view=login&msg=" . urlencode("Identifiants incorrects");
+					// On redirigera vers la page index automatiquement
 				}
 
-				// On redirigera vers la page index automatiquement
+				
 			break;
-			
-			case 'Interdire':
-				if ($idUser = valider("idUser")){
-				interdireUtilisateur($idUser);
-				$qs = "?view=users";}
-			break;
-			
-			case 'Autoriser':
-				if ($idUser = valider("idUser"))
-				{
-					autoriserUtilisateur($idUser);
-					$qs = "?view=users";
+
+			// TODO : prévoir les cas Interdire et Autoriser
+			// TODO: resélectionner la vue 'users'
+			// après chaque traitement
+			// => redirection vers la page index 
+			// AVEC un parametre VIEW correpondant à la BONNE VUE 
+
+			case 'Interdire' : 
+				if ($idUser = valider("idUser")) {
+					interdireUtilisateur($idUser); 
 				}
+
+				// Prévoir un parametre Vue lors la redirection 
+				$qs = "?view=users&idLastUser=" . $idUser;
+			break; 
+
+			case 'Autoriser':
+				if ($idUser = valider("idUser")) {
+					autoriserUtilisateur($idUser);
+				}
+				$qs = "?view=users&idLastUser=" . $idUser;
 			break;
+
 		}
 
 	}

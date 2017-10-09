@@ -18,15 +18,25 @@ include_once("libs/maLibUtils.php"); // tprint
 <h2>Liste des utilisateurs de la base </h2>
 
 <?php
+// TODO : 1) afficher uniquement les noms des utilisateurs 
+// TODO: 2) présélectionner dans le menu déroulant l'utilisateur qui vient d'être manipulé 
 
 echo "liste des utilisateurs autorises de la base :"; 
 $users = listerUtilisateurs("nbl");
-tprint($users[0]["pseudo"]);	// préférer un appel à mkTable($users);
+//tprint($users);	// préférer un appel à mkTable($users);
+foreach($users as $dataUser) {
+	echo "<p>" . $dataUser["pseudo"] . "</p>";
+}
+
 
 echo "<hr />";
 echo "liste des utilisateurs non autorises de la base :"; 
 $users = listerUtilisateurs("bl");
-tprint($users[0]["pseudo"]);	// préférer un appel à mkTable($users);
+//tprint($users);	// préférer un appel à mkTable($users);
+
+foreach($users as $dataUser) {
+	echo "<p>" . $dataUser["pseudo"] . "</p>";
+}
 
 ?>
 <hr />
@@ -36,18 +46,24 @@ tprint($users[0]["pseudo"]);	// préférer un appel à mkTable($users);
 
 <select name="idUser">
 <?php
-echo "liste des utilisateurs autorisees de la base:";
-$users = listerUtilisateurs("");
+$users = listerUtilisateurs();
+// on récupère l'identifiant 
+// du dernier utilisateur manipulé
+$idLastUser = valider("idLastUser");
 
 // préférer un appel à mkSelect("idUser",$users, ...)
+// TODO: présélectionner le dernier utilisateur manipulé
+
 foreach ($users as $dataUser)
 {
-	echo "<option value=\"$dataUser[id]\">\n";
+	if ($idLastUser == $dataUser["id"])
+		$toSel="selected";
+	else $toSel ="";  
+
+	echo "<option $toSel value=\"$dataUser[id]\">\n";
 	echo  $dataUser["pseudo"];
-	if ($dataUser["blacklist"] == 1)
-		echo " (bl)";
-	else
-		echo " (nbl)";
+	if ($dataUser["blacklist"] == 1) echo " (bl)"; 
+	else echo " (nbl)"; 
 	echo "\n</option>\n"; 
 }
 ?>

@@ -22,31 +22,27 @@ function listerUtilisateurs($classe = "both")
 	// Lorsqu'elle vaut "bl", elle ne renvoie que les utilisateurs blacklistés
 	// Lorsqu'elle vaut "nbl", elle ne renvoie que les utilisateurs non blacklistés
 
-	$SQL = "select * from users";
-	if ($classe == "bl")
-	{
+	$SQL = "SELECT * FROM users";
+	if ($classe == "bl") 
 		$SQL .= " WHERE blacklist=1";
-	}
-	if ($classe == "nbl")
-	{
+	if ($classe == "nbl") 
 		$SQL .= " WHERE blacklist=0";
-	}
+
 	return parcoursRs(SQLSelect($SQL));
 
 }
 
 function interdireUtilisateur($idUser)
 {
-	$SQL ="UPDATE users set blacklist=1 where id=$idUser";
-	SQLUpdate($SQL);
 	// cette fonction affecte le booléen "blacklist" à vrai 
-
+	$SQL = "UPDATE users SET blacklist=1 WHERE id='$idUser'";
+	SQLUpdate($SQL);
 }
 
 function autoriserUtilisateur($idUser)
 {
 	// cette fonction affecte le booléen "blacklist" à faux 
-	$SQL ="UPDATE users set blacklist=0 where id = $idUser";
+	$SQL = "UPDATE users SET blacklist=0 WHERE id='$idUser'";
 	SQLUpdate($SQL);
 }
 
@@ -59,6 +55,9 @@ function verifUserBdd($login,$passe)
 	// renvoie faux si user inconnu
 	// renvoie l'id de l'utilisateur si succès
 
+	$SQL="SELECT id FROM users WHERE pseudo='$login' AND passe='$passe' ";
+	return SQLGetChamp($SQL);
+
 
 	// On utilise SQLGetCHamp
 	// si on avait besoin de plus d'un champ
@@ -68,6 +67,8 @@ function verifUserBdd($login,$passe)
 function isAdmin($idUser)
 {
 	// vérifie si l'utilisateur est un administrateur
+	$SQL = "SELECT admin FROM users WHERE id='$idUser'";
+	return SQLGetChamp($SQL);
 }
 
 /********* EXERCICE 5 *********/

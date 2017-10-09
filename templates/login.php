@@ -7,6 +7,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	die("");
 }
 
+$msg = valider("msg");
 ?>
 
 <div id="corps">
@@ -20,6 +21,10 @@ Passe : <input type="password" name="passe" /><br />
 <input type="submit" name="action" value="Connexion" />
 </form>
 </div>
+
+<?php 
+	if ($msg) echo "<h2 style=\"color:red;\">$msg</h2>";
+?>
 
 
 </div>

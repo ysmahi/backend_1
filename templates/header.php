@@ -36,14 +36,13 @@ echo "<?xml version=\"1.0\" encoding=\"iso-8859-15\" ?>";
 
 <a href="index.php?view=accueil">Accueil</a>
 <a href="index.php?view=users">Utilisateurs</a>
+<a href="index.php?view=conversations">Conversations</a>
 
 <?php
 // Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
 if (!valider("connecte","SESSION"))
 	echo "<a href=\"index.php?view=login\">Se connecter</a>";
 ?>
-
-<a href="index.php?view=conversations">Mes conversations</a>
 
 <h1 id="chatisig"> CHAT'EBM 1.0 </h1>
 
