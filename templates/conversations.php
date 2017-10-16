@@ -22,17 +22,19 @@ include_once("libs/maLibForms.php");// mkTable, mkLiens, mkSelect ...
 
 <?php
 $conversations = listerConversations("actives");
-mkTable($conversations, $listeChamps=array('id', 'theme')); 
+//mkTable($conversations, array("theme","id")); 
 // Comment n'afficher que id & thèmes ?
 // A remplacer par mkLiens
+mkLiens($conversations, "theme","id","index.php?view=chat","idConv");
 ?>
 
 <h2>Liste des conversations inactives</h2>
 
 <?php
 $conversations = listerConversations("inactives");
-mkTable($conversations, $listeChamps=array('id', 'theme')); 
+//mkTable($conversations, array("theme","id")); 
 // A remplacer par mkLiens
+mkLiens($conversations, "theme","id","index.php?view=chat","idConv");
 ?>
 
 <hr />
@@ -41,7 +43,22 @@ mkTable($conversations, $listeChamps=array('id', 'theme'));
 <?php
 
 $conversations = listerConversations(); // toutes
-mkTable($conversations, $listeChamps=array('id', 'theme')); // A remplacer par mkSelect
+//mkTable($conversations); // A remplacer par mkSelect
+
+$idLastConv = valider("idLastConv");
+
+mkForm("controleur.php");
+mkSelect("idConv",$conversations ,"id", "theme", $idLastConv);
+mkInput("submit","action","Activer"); 
+mkInput("submit","action","Archiver"); 
+mkInput("submit","action","Supprimer"); 
+endForm();
+
+mkForm("controleur.php");
+echo "Theme:"; 
+mkInput("text","theme",""); 
+mkInput("submit","action","Créer conversation");  
+endForm();
 ?>
 
 

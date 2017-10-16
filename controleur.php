@@ -72,6 +72,35 @@ session_start();
 				$qs = "?view=users&idLastUser=" . $idUser;
 			break;
 
+			case 'Archiver':
+				if ($idConv = valider("idConv")) {
+					archiverConversation($idConv);
+				}
+				$qs = "?view=conversations&idLastConv=" . $idConv;
+			break;
+
+			case 'Activer':
+				if ($idConv = valider("idConv")) {
+					reactiverConversation($idConv);
+				}
+				$qs = "?view=conversations&idLastConv=" . $idConv;
+			break;
+
+			case 'Supprimer':
+				if ($idConv = valider("idConv")) {
+					supprimerConversation($idConv);
+				}
+				$qs = "?view=conversations&idLastConv=" . $idConv;
+			break;
+
+			case 'Créer conversation':
+				$idConv = 0;
+				if ($theme = valider("theme")) {
+					$idConv = creerConversation($theme);
+				}
+				$qs = "?view=conversations&idLastConv=" . $idConv;
+			break;
+
 		}
 
 	}

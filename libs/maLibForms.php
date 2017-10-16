@@ -163,6 +163,25 @@ function mkLien($url,$label, $qs="")
 
 function mkLiens($tabData,$champLabel, $champCible, $urlBase=false, $nomCible="")
 {
+
+	foreach($tabData as $data) {
+		echo "<a href=\"";
+		// url 
+		if ($urlBase) {
+			echo $urlBase; 
+			echo "&"; 
+			echo $nomCible; 
+			echo "="; 
+			echo urlencode($data[$champCible]);
+		}
+		else
+			echo $data[$champCible];
+		echo "\">"; 
+		// ancre
+		echo $data[$champLabel];
+		echo "</a><br />\n"; 
+	}
+
 	// produit une liste de liens (plus facile à styliser)
 	// A partir de données fournies dans un tableau associatif	
 	// Chaque lien pointe vers une url définie par le champ $champCible

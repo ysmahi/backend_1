@@ -72,42 +72,48 @@ function isAdmin($idUser)
 }
 
 /********* EXERCICE 5 *********/
+// id, active, theme 
 
 function listerConversations($mode="tout")
 {
 	// Liste toutes les conversations ($mode="tout")
-	$SQL = "SELECT * FROM Conversations";
 	// OU uniquement celles actives  ($mode="actives"), ou inactives  ($mode="inactives")
-	if ($mode == "actives")
-		$SQL .= " WHERE active=1";
-	if ($mode == "inactives")
-		$SQL .= " WHERE active=0";
-	
+	$SQL ="SELECT * FROM conversations"; 
+	if ($mode == 'actives')
+		$SQL .= " WHERE active=1"; 
+
+	if ($mode == 'inactives')
+		$SQL .= " WHERE active=0"; 
+
 	return parcoursRS(SQLSelect($SQL));
 }
 
 function archiverConversation($idConversation)
 {
 	// rend une conversation inactive
-
+	$SQL = "UPDATE conversations SET active=0 WHERE id='$idConversation'"; 
+	SQLUpdate($SQL);
 }
 
 function reactiverConversation($idConversation)
 {
 	// rend une conversation active
-
+	$SQL = "UPDATE conversations SET active=1 WHERE id='$idConversation'"; 
+	SQLUpdate($SQL);
 }
 
 function creerConversation($theme)
 {
 	// crée une nouvelle conversation et renvoie son identifiant
-
+	$SQL = "INSERT INTO conversations(theme) VALUES ('$theme')";
+	return SQLInsert($SQL); 
 }
 
 function supprimerConversation($idConv)
 {
 	// supprime une conversation et ses messages
-
+	$SQL = "DELETE FROM conversations WHERE id='$idConv'";
+	SQLDelete($SQL);
 }
 
 
